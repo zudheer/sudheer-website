@@ -1,0 +1,11 @@
+# resume_source.txt
+#
+# Path to your current resume PDF. Update this line whenever you have a new
+# version, then run from the site root:
+#   python scripts/update_resume.py
+#
+# It gets copied to assets/files/Sudheer-K-Resume.pdf — the file the
+# "Download Resume" buttons on the site link to. The filename on the site
+# never changes, only its contents.
+
+C:\Users\sudhe\Downloads\Resume Sudheer Senior Software Engineer.pdf

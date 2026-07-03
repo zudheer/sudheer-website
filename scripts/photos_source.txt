@@ -1,0 +1,18 @@
+# photos_source.txt
+#
+# Fills the Photography grid on the site (#photography section in index.html).
+# One Instagram post or reel URL per line, in the order you want them to
+# appear (left-to-right, top-to-bottom). Nothing else needed — the script
+# pulls the image and caption straight from each URL.
+#
+# When you're done, run from the site root:
+#   pip install pillow   # once
+#   python scripts/update_photos.py
+
+https://www.instagram.com/p/DZUEwVij6Mm/
+https://www.instagram.com/p/DY2LHD9j35N/
+https://www.instagram.com/p/DXTdiy6j7nL/
+https://www.instagram.com/p/DVX2TLtD8jU/
+https://www.instagram.com/p/DTc1nfRj7qS/
+https://www.instagram.com/reel/DQ0mD0WD0VQ/
+https://www.instagram.com/p/DOYll_mD_m3/

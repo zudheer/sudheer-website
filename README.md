@@ -30,21 +30,41 @@ Sudheer K's personal site — resume, work experience, projects, and side-projec
 
 The `#photography` section on the site (`index.html`) links each grid tile straight to an
 Instagram post — clicking goes to Instagram, but the tile itself shows a locally hosted photo,
-not an embed (Instagram's embed widget can't be restyled or read from JS — it's a cross-origin
-iframe — so a real image file is the only way to get a clean square tile).
+not a live embed (Instagram's embed widget can't be restyled or read from JS — it's a
+cross-origin iframe — so a real image file is the only way to get a clean square tile).
 
-1. Edit `scripts/photos_source.txt` — for each numbered slot (matches the tile's position on the
-   page), paste the path to a photo on your computer. The Instagram permalink shown next to each
-   number is just a reminder of which post that slot links to.
+1. Edit `scripts/photos_source.txt` — one Instagram post/reel URL per line, in the order you
+   want them to appear. That's the only input; no file paths or slot numbers needed.
 2. Run:
    ```
    pip install pillow   # once
    python scripts/update_photos.py
    ```
-   Each photo gets center-cropped to a square, resized, and saved to
-   `assets/img/photography/<slot>.jpg`. `index.html` already points at those exact filenames, so
-   no HTML changes are needed — refresh the page and the new photos show up. Any slot without a
-   file yet falls back to a camera-icon placeholder instead of a broken image.
+   For each URL, the script fetches Instagram's public embed page
+   (`instagram.com/p/<id>/embed/captioned/`), pulls the real photo/cover-frame image and the
+   caption, center-crops the image to a square, and saves it to
+   `assets/img/photography/<n>.jpg`. It then rewrites the tile grid in `index.html` (between the
+   `PHOTOS:START`/`PHOTOS:END` markers) with the correct links, captions (as `alt`/`title`), and
+   reel badges — no manual HTML editing.
+
+   This depends on the structure of Instagram's embed page, which isn't a documented/stable API
+   and can change without notice. If a particular URL stops extracting cleanly, that one tile
+   just falls back to the camera-icon placeholder — it won't break the rest of the run. Re-run
+   the script any time; it always regenerates the full grid from `photos_source.txt`.
+
+## Updating the Blog section
+
+The `#blog` section pulls from your Medium RSS feed (`https://medium.com/feed/@zudheer`) — no
+manual data entry needed, unlike the two tools above.
+
+Run:
+```
+python scripts/update_blog.py
+```
+It fetches the feed, takes the latest 6 posts, and rewrites the block between the
+`<!-- BLOG:START -->` / `<!-- BLOG:END -->` markers in `index.html` with fresh titles, dates,
+tags, and excerpts. Don't hand-edit inside those markers — the next run overwrites them. Run this
+after publishing a new Medium post. No third-party dependencies (stdlib only).
 
 ## About `assets/vendor/` and `assets/css/style.css`
 
